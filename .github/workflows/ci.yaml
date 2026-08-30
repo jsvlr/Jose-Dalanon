@@ -44,7 +44,7 @@ jobs:
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
-        run: php artisan migration --force
+        run: php artisan migrate --force
 
       - name: run pest tests
         run: php artisan test
