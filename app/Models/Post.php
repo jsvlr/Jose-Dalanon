@@ -37,6 +37,12 @@ class Post extends Model
         ];
     }
 
+    // this will used the slug field on url instead of id
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function postCategory(): BelongsTo
     {
         return $this->belongsTo(PostCategory::class);

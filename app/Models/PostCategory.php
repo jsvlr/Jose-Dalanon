@@ -17,6 +17,12 @@ class PostCategory extends Model
         "slug"
     ];
 
+    // this will used the slug field on url instead of id
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
