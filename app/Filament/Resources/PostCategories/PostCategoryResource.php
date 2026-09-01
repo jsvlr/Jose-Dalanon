@@ -5,6 +5,7 @@ namespace App\Filament\Resources\PostCategories;
 use App\Filament\Resources\PostCategories\Pages\ManagePostCategories;
 use App\Models\PostCategory;
 use BackedEnum;
+use Dom\Text;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
@@ -77,6 +78,10 @@ class PostCategoryResource extends Resource
                     ->sortable()
                     ->searchable(),
 
+                TextColumn::make('slug')
+                    ->toggledHiddenByDefault()
+                    ->toggleable(),
+
                 ColorColumn::make('color')
                     ->sortable()
                     ->searchable()
@@ -93,11 +98,13 @@ class PostCategoryResource extends Resource
                 TextColumn::make('created_at')
                     ->date('M d, Y')
                     ->sortable()
+                    ->toggledHiddenByDefault()
                     ->toggleable(),
 
                 TextColumn::make('updated_at')
                     ->date('M d, Y')
                     ->sortable()
+                    ->toggledHiddenByDefault()
                     ->toggleable(),
             ])
             ->filters([

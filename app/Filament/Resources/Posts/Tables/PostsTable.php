@@ -32,7 +32,6 @@ class PostsTable
                     : 'heroicon-o-document-text'
             )
             ->columns([
-
                 ImageColumn::make('thumbnail')
                     ->disk('public')
                     ->imageSize(50)
@@ -43,8 +42,6 @@ class PostsTable
                     ->sortable()
                     ->weight(FontWeight::Bold)
                     ->limit(40),
-
-
 
                 TextColumn::make('views')
                     ->numeric()
