@@ -9,12 +9,13 @@ use Override;
 enum NavigationGroupEnum: string implements HasLabel
 {
     case BLOG = "Blog";
-
+    case SETTINGS = "Settings";
     #[Override]
     public function getLabel(): string|Htmlable|null
     {
         return match ($this) {
-            self::BLOG => "Blog"
+            self::BLOG => "Blog",
+            self::SETTINGS => "Settings"
         };
     }
 }

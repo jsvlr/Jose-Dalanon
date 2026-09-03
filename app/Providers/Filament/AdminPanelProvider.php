@@ -34,11 +34,11 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->brandLogo(null)
             ->brandName(Setting::get('general.brandName', 'Laravel'))
             ->brandLogo(Storage::url(Setting::get('general.brandLogo')))
             ->brandLogoHeight('50px')
             ->favicon(Storage::url(Setting::get('general.favicon')))
+            ->sidebarCollapsibleOnDesktop()
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->login()
             ->defaultAvatarProvider(GravatarProvider::class)
@@ -48,6 +48,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
+            ->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')
             ->pages([
                 Dashboard::class,
             ])
