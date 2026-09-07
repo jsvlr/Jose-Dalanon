@@ -15,7 +15,6 @@ use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
-use Hamcrest\Core\Set;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
@@ -29,43 +28,17 @@ use Outerweb\Settings\Facades\Setting;
 
 class AdminPanelProvider extends PanelProvider
 {
-    public function applySettingsConfig(Panel $panel): Panel
-    {
-        // This prevent error on newly pull and continue integration
-        try {
-            $brandName = Setting::get('general.brandName', env('APP_NAME'));
-            $brandLogo = Storage::url(Setting::get('general.brandLogo', null));
-            $favicon = Storage::url(Setting::get('general.favicon', null));
-            $primaryColor = Setting::get('general.color', Color::Amber);
 
-            $panel->brandName($brandName);
-            $panel->colors([
-                'primary' => $primaryColor
-            ]);
-            if ($brandLogo !== null) {
-                $panel->brandLogo($brandLogo);
-                $panel->brandLogoHeight('50px'); // will changed this to dynamic later...
-            }
-
-            if ($favicon !== null) {
-                $panel->favicon($favicon);
-            }
-        } catch (Exception $e) {
-            Log::error($e);
-        } finally {
-            return $panel;
-        }
-    }
 
     public function panel(Panel $panel): Panel
     {
+        $panel = $this->applyGeneralSettingsConfig($panel);
 
         $panel
             ->default()
             ->id('admin')
             ->path('admin')
             ->sidebarCollapsibleOnDesktop()
-            ->viteTheme('resources/css/filament/admin/theme.css')
             ->login()
             ->defaultAvatarProvider(GravatarProvider::class)
             ->profile(isSimple: false)
@@ -99,6 +72,39 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ]);
+
+
+
+        return $panel;
+    }
+
+    protected function applyGeneralSettingsConfig(Panel $panel): Panel
+    {
+        try {
+            $general = [
+                'brandName' => Setting::get('general.brandName', env('APP_NAME')),
+                'brandLogo' => Setting::get('general.brandLogo'),
+                'brandLogoHeight' => Setting::get('general.brandLogoHeight'),
+                'favicon' => Setting::get('general.favicon'),
+                'color' => Setting::get('general.color', Color::Amber),
+            ];
+
+            $panel
+                ->brandName($general['brandName'])
+                ->colors([
+                    'primary' => $general['color']
+                ])
+                ->when(
+                    $general['brandLogo'],
+                    fn(Panel $p, $path) => $p
+                        ->brandLogo(Storage::url($path))
+                        ->brandLogoHeight(($general['brandLogoHeight'] ?? 50) . 'px')
+                )
+                ->when($general['favicon'], fn(Panel $p, $path) => $p
+                    ->favicon(Storage::url($path)));
+        } catch (Exception $e) {
+            Log::error($e);
+        }
 
         return $panel;
     }

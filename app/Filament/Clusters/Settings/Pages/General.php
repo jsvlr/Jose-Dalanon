@@ -62,6 +62,13 @@ class General extends Settings
                                     ->helperText('this will be used on the footer.')
                                     ->columnSpanFull(),
 
+                                TextInput::make('general.brandLogoHeight')
+                                    ->label('Logo Size')
+                                    ->numeric()
+                                    ->default('50')
+                                    ->hint('pixels')
+                                    ->columnSpanFull(),
+
                                 FileUpload::make('general.brandLogo')
                                     ->label('Logo')
                                     ->disk('public')
