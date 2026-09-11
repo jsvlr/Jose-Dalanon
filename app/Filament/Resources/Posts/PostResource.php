@@ -23,7 +23,7 @@ class PostResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    protected static string|UnitEnum|null $navigationGroup = \App\Enums\NavigationGroupEnum::BLOG;
+    // protected static string|UnitEnum|null $navigationGroup = \App\Enums\NavigationGroupEnum::BLOG;
 
     protected static ?int $navigationSort = -1;
 

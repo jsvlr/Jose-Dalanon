@@ -5,10 +5,8 @@ namespace App\Filament\Resources\PostCategories;
 use App\Filament\Resources\PostCategories\Pages\ManagePostCategories;
 use App\Models\PostCategory;
 use BackedEnum;
-use Dom\Text;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
-use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -22,9 +20,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Str;
-use Override;
 use UnitEnum;
 
 class PostCategoryResource extends Resource
@@ -37,7 +33,7 @@ class PostCategoryResource extends Resource
 
     protected static ?string $navigationLabel = 'Categories';
 
-    protected static string|UnitEnum|null $navigationGroup = \App\Enums\NavigationGroupEnum::BLOG;
+    // protected static string|UnitEnum|null $navigationGroup = \App\Enums\NavigationGroupEnum::BLOG;
 
     protected static ?int $navigationSort = 0;
 

@@ -14,7 +14,7 @@
 <div class="flex items-center gap-3">
     <div class="w-20">
         <div class="h-2 w-full rounded-full bg-gray-200 dark:bg-gray-700">
-            <div class="h-2 rounded-full {{ $color }}" @style(['width' => $level . '%'])></div>
+            <div class="h-2 rounded-full {{ $color }}" style="width: {{ $level }}%"></div>
         </div>
     </div>
 

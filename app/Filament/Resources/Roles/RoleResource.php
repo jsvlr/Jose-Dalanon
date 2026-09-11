@@ -30,7 +30,7 @@ class RoleResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static string|UnitEnum|null $navigationGroup = \App\Enums\NavigationGroupEnum::WORK;
+    // protected static string|UnitEnum|null $navigationGroup = \App\Enums\NavigationGroupEnum::WORK;
 
     public static function form(Schema $schema): Schema
     {
