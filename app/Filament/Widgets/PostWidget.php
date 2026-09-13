@@ -15,7 +15,7 @@ class PostWidget extends StatsOverviewWidget
 
         $stats = Post::selectRaw("
             COUNT(*) as total,
-            SUM(CASE WHEN MONTH(created_at) = ? AND YEAR(created_at) = ? THEN 1 ELSE 0 END) as recent,
+            SUM(CASE WHEN EXTRACT(MONTH FROM created_at) = ? AND EXTRACT(YEAR FROM created_at) = ? THEN 1 ELSE 0 END) as recent,
             SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as published,
             SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as draft,
             SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as archived

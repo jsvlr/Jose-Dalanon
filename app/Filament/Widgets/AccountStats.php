@@ -13,7 +13,7 @@ class AccountStats extends StatsOverviewWidget
     {
         $stat = Account::selectRaw("
             COUNT(*) as total,
-            SUM(CASE WHEN MONTH(created_at) = ? AND YEAR(created_at) = ? THEN 1 ELSE 0 END) as recent,
+            SUM(CASE WHEN EXTRACT(MONTH FROM created_at) = ? AND EXTRACT(YEAR FROM created_at) = ? THEN 1 ELSE 0 END) as recent,
             SUM(CASE WHEN is_active = ? THEN 1 ELSE 0 END) as active,
             SUM(CASE WHEN is_active = ? THEN 1 ELSE 0 END) as inactive
         ", [
