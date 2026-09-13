@@ -11,6 +11,9 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
+# Run migrations on startup
+php artisan migrate --force
+
 # Start php-fpm in the background
 php-fpm -D
 
