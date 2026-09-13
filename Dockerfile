@@ -18,9 +18,19 @@ RUN npm run build
 FROM php:8.4-fpm AS backend
 
 RUN apt-get update && apt-get install -y \
-    git curl unzip libpq-dev libonig-dev libzip-dev zip \
-    && docker-php-ext-install pdo pdo_mysql mbstring zip dom intl 
-    
+    git curl unzip \
+    libpq-dev \
+    libonig-dev \
+    libzip-dev \
+    libicu-dev \
+    libxml2-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    zip \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo pdo_mysql mbstring zip dom intl gd bcmath
+
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
