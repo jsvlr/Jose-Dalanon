@@ -28,7 +28,7 @@ RUN npm run build
 FROM php:8.4-fpm AS backend
 
 RUN apt-get update && apt-get install -y \
-    git curl unzip nginx \
+    git curl unzip nginx gettext-base \
     libpq-dev libonig-dev libzip-dev libicu-dev libxml2-dev \
     libpng-dev libjpeg-dev libfreetype6-dev zip \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
