@@ -1,5 +1,5 @@
 # Stage 1 - Build Frontend (Vite)
-FROM node:20 AS frontend
+FROM node:24 AS frontend
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
@@ -7,7 +7,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2 - Backend (Laravel + PHP + Composer)
-FROM php:8.2-fpm AS backend
+FROM php:8.4-fpm AS backend
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
