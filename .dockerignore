@@ -1,0 +1,66 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Environment files (never bake secrets into the image)
+.env
+.env.*
+!.env.example
+
+# Dependencies (installed fresh inside the container)
+/vendor
+/node_modules
+
+# Laravel storage & cache (generated at runtime, not needed in build context)
+/storage/*.key
+/storage/app/*
+!/storage/app/public
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/testing/*
+/storage/framework/views/*
+/storage/logs/*
+!/storage/framework/cache/.gitignore
+!/storage/framework/sessions/.gitignore
+!/storage/framework/testing/.gitignore
+!/storage/framework/views/.gitignore
+!/storage/logs/.gitignore
+
+# Build artifacts
+/public/build
+/public/hot
+/public/storage
+
+# IDE / editor files
+.vscode
+.idea
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+/tests
+.phpunit.result.cache
+phpunit.xml
+
+# Docker-related (avoid recursive copying issues)
+Dockerfile
+.dockerignore
+docker-compose.yml
+docker-compose.*.yml
+
+# Docs / misc
+README.md
+CHANGELOG.md
+.github
+.editorconfig

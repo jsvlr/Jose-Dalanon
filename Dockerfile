@@ -1,6 +1,16 @@
 # Stage 1 - Backend deps (Composer)
-FROM composer:2 AS vendor
+FROM php:8.4-cli AS vendor
 WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    git curl unzip \
+    libpq-dev libonig-dev libzip-dev libicu-dev libxml2-dev \
+    libpng-dev libjpeg-dev libfreetype6-dev zip \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo pdo_mysql mbstring zip dom intl gd bcmath
+
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
 COPY database/ database/
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --no-scripts --no-interaction --optimize-autoloader --ignore-platform-reqs
@@ -14,22 +24,16 @@ COPY . .
 COPY --from=vendor /app/vendor ./vendor
 RUN npm run build
 
-# Stage 3 - Backend (Laravel + PHP + Composer)
+# Stage 3 - Backend (Laravel + PHP + Nginx)
 FROM php:8.4-fpm AS backend
 
 RUN apt-get update && apt-get install -y \
-    git curl unzip \
-    libpq-dev \
-    libonig-dev \
-    libzip-dev \
-    libicu-dev \
-    libxml2-dev \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    zip \
+    git curl unzip nginx \
+    libpq-dev libonig-dev libzip-dev libicu-dev libxml2-dev \
+    libpng-dev libjpeg-dev libfreetype6-dev zip \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo pdo_mysql mbstring zip dom intl gd bcmath
+    && docker-php-ext-install pdo pdo_mysql mbstring zip dom intl gd bcmath \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
@@ -41,8 +45,15 @@ COPY --from=frontend /app/public/build ./public/build
 
 RUN composer install --no-dev --optimize-autoloader
 
-RUN php artisan config:clear && \
-    php artisan route:clear && \
-    php artisan view:clear
+# Nginx config template + startup script
+RUN mkdir -p /etc/nginx/templates
+COPY docker/nginx.conf.template /etc/nginx/templates/default.conf.template
+COPY docker/start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
 
-CMD ["php-fpm"]
+# Laravel permissions (storage/cache need to be writable)
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+
+EXPOSE 10000
+
+CMD ["/usr/local/bin/start.sh"]
