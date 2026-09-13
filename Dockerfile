@@ -19,8 +19,8 @@ FROM php:8.4-fpm AS backend
 
 RUN apt-get update && apt-get install -y \
     git curl unzip libpq-dev libonig-dev libzip-dev zip \
-    && docker-php-ext-install pdo pdo_mysql mbstring zip dom intl gd exif pcntl fileinfo mysql sqlite3 pdo_sqlite bcmath
-
+    && docker-php-ext-install pdo pdo_mysql mbstring zip dom intl 
+    
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
