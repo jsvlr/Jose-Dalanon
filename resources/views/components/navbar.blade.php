@@ -1,5 +1,5 @@
 {{-- resources/views/components/navbar.blade.php --}}
-<nav class="m-4">
+<nav id="navbar" class="sticky top-0 z-50 lg:px-3 bg-white dark:bg-black shadow-2xs">
     <div class="max-w-full mx-auto flex flex-wrap items-center justify-between gap-4">
 
         {{-- Left: Logo, Chat, Watching --}}
@@ -18,10 +18,10 @@
         </div>
 
         {{-- Center: Nav links --}}
-        <div class="flex items-center gap-1 rounded-lg px-2 py-2 sm:gap-3 sm:px-5">
+        <div class="flex items-center justify-between gap-2 lg:gap-12 sm:gap-3 sm:px-5 ">
             @foreach ($links as $route => $link)
                 <a href="{{ route($route) }}" wire:navigate
-                    class="{{ request()->routeIs($route) ? 'font-bold text-gray-900 dark:text-white' : 'font-light text-gray-600 dark:text-gray-300' }} flex items-center gap-1.5 rounded-md px-2 py-1.5 text-sm transition-colors hover:text-gray-900 dark:hover:text-white sm:px-3">
+                    class="{{ request()->routeIs($route) ? 'font-bold text-gray-900 dark:text-white border-b-4 border-black dark:border-white' : 'font-light text-gray-600 dark:text-gray-300' }} flex items-center gap-1.5 px-2 py-5 text-sm transition-colors hover:text-gray-900 dark:hover:text-white sm:px-3">
                     <i class="{{ $link['icon'] }}"></i>
                     <span class="hidden sm:inline">{{ $link['label'] }}</span>
                 </a>

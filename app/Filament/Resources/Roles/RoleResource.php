@@ -14,12 +14,14 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 use UnitEnum;
 
 class RoleResource extends Resource
@@ -38,9 +40,16 @@ class RoleResource extends Resource
             ->components([
                 TextInput::make('title')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->live()
+                    ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state))),
 
-                Textarea::make('description'),
+                TextInput::make('slug')
+                    ->required()
+                    ->readOnly(),
+
+                Textarea::make('description')
+                    ->columnSpanFull(),
                 Toggle::make('is_primary')
             ]);
     }

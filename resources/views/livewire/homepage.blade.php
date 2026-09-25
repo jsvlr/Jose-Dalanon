@@ -1,7 +1,7 @@
 {{-- resources/views/livewire/homepage.blade.php --}}
-<section id="homepage" class="px-4 py-12 sm:px-6 lg:px-8 lg:py-5 ">
-    <div class="mx-auto flex max-w-6xl flex-col-reverse items-center gap-10 lg:flex-row lg:justify-between">
-
+<section id="homepage" class="px-4 sm:px-6 lg:px-8 ">
+    <div id="introduction"
+        class="mx-auto flex max-w-6xl flex-col-reverse items-center gap-10 lg:flex-row lg:justify-between">
         {{-- Left: Text content --}}
         <div class="w-full text-center lg:w-auto lg:text-left">
             <div class="mb-4 flex justify-center lg:justify-start">
@@ -31,7 +31,7 @@
                 {{ $tagline }}
             </p>
 
-            <div class="mt-6 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
+            <div class="mt-2 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
                 @foreach ($accounts as $account)
                     <a data-animate="social" href="{{ $account['url'] }}" target="_blank" rel="noopener noreferrer"
                         class="flex items-center gap-2 rounded-lg px-3 py-2.5 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800">
@@ -48,154 +48,27 @@
 
         {{-- Right: Brand image --}}
         <div data-animate="portrait" class="shrink-0">
-            <div class="overflow-hidden rounded-2xl shadow-md ring-1 ring-gray-200 dark:ring-gray-700">
+            <div class="overflow-hidden rounded-2xl border-0 ">
                 <img src="{{ Storage::url($brandLogo) }}" alt="{{ $name ?? 'Brand' }} logo"
                     class="h-40 w-40 object-cover sm:h-48 sm:w-48 lg:h-52 lg:w-52">
             </div>
         </div>
     </div>
-    <div id="quick-stats" class="rounded-2xl w-auto mt-10">
+
+    <div id="quick-stats" class="rounded-2xl w-auto mt-5">
         <div class="flex justify-around items-center gap-4">
             @foreach ($this->quickStats() as $quickStat)
                 <div class="text-center p-3">
-                    <h1 class=" font-bold text-2xl">{{ $quickStat['subtitle'] }}</h1>
-                    <p class="text-gray-300">{{ $quickStat['title'] }}</p>
+                    <h1 class=" font-bold text-2xl">{{ $quickStat->subtitle }}</h1>
+                    <p class="text-gray-300">{{ $quickStat->title }}</p>
                 </div>
             @endforeach
         </div>
     </div>
-    <div id="github-stats">
-        @php
-            $levelClasses = [
-                0 => 'bg-gray-100 dark:bg-gray-800',
-                1 => 'bg-green-200 dark:bg-green-900',
-                2 => 'bg-green-300 dark:bg-green-700',
-                3 => 'bg-green-500 dark:bg-green-600',
-                4 => 'bg-green-700 dark:bg-green-400',
-            ];
-        @endphp
-        <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
 
-            <div class="rounded-2xl bg-gray-50 p-5 dark:bg-gray-900">
-                <p class="text-3xl font-bold text-gray-900 dark:text-white">
-                    {{ number_format($this->githubStats['total_contributions']) }}
-                </p>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Contributions this year</p>
-            </div>
+    <x-sections.github-stats :stats="$this->githubStats()" />
+    <x-sections.featured-blogs :blogs="$this->featuredBlogs()" :categories="$this->usedBlogCategory()" class="mt-10" />
+    <x-sections.featured-projects :projects="$this->featuredProjects()" class="mt-10" />
+    <x-sections.featured-certificates :certificates="$this->featuredCertificates()" class="mt-10" />
 
-            <div class="rounded-2xl bg-gray-50 p-5 dark:bg-gray-900">
-                <p class="text-3xl font-bold text-gray-900 dark:text-white">
-                    {{ $this->githubStats['public_repos'] }}
-                </p>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Public repositories</p>
-            </div>
-
-            <div class="rounded-2xl bg-gray-50 p-5 dark:bg-gray-900">
-                <p class="text-3xl font-bold text-gray-900 dark:text-white">
-                    {{ $this->githubStats['total_stars'] }}
-                </p>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Stars earned</p>
-            </div>
-
-            <div class="rounded-2xl bg-gray-50 p-5 dark:bg-gray-900">
-                <p class="text-3xl font-bold text-gray-900 dark:text-white">
-                    {{ $this->githubStats['followers'] }}
-                </p>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">GitHub followers</p>
-            </div>
-
-            <div class="col-span-full rounded-2xl bg-gray-50 p-5 dark:bg-gray-900">
-                <p class="mb-3 text-sm font-semibold text-gray-700 dark:text-gray-200">Contribution activity</p>
-                <div class="flex gap-[3px] overflow-x-auto pb-1 justify-center">
-                    @foreach ($this->githubStats['weeks'] as $week)
-                        <div class="flex flex-col gap-[3px]">
-                            @foreach ($week['contributionDays'] as $day)
-                                <span class="h-2.5 w-2.5 rounded-sm {{ $levelClasses[$day['level']] }}"
-                                    title="{{ $day['count'] }} contributions on {{ $day['date'] }}"></span>
-                            @endforeach
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </div>
 </section>
-
-@push('scripts')
-    <script>
-        function initHomepageAnimations() {
-            console.log('[anime] init called, anime defined?', typeof anime);
-
-            if (typeof anime === 'undefined') return;
-            const {
-                animate,
-                stagger,
-                createTimeline
-            } = anime;
-
-            const badge = document.querySelector('[data-animate="badge"]');
-            const name = document.querySelector('[data-animate="name"]');
-            const role = document.querySelector('[data-animate="role"]');
-            const description = document.querySelector('[data-animate="description"]');
-            const socials = document.querySelectorAll('[data-animate="social"]');
-            const portrait = document.querySelector('[data-animate="portrait"]');
-
-            console.log('[anime] elements found:', {
-                badge: !!badge,
-                name: !!name,
-                role: !!role,
-                description: !!description,
-                socialsCount: socials.length,
-                portrait: !!portrait,
-            });
-
-            if (!badge || !name) {
-                console.warn('[anime] bailing early — badge or name not found');
-                return;
-            }
-
-            console.log('[anime] setting opacity to 0');
-
-            anime.set([badge, name, role, description, ...socials, portrait], {
-                opacity: 0
-            });
-
-            console.log('[anime] starting timeline');
-            createTimeline({
-                    defaults: {
-                        ease: 'outExpo',
-                        duration: 700
-                    }
-                })
-                .add(badge, {
-                    opacity: [0, 1],
-                    translateY: [-10, 0]
-                })
-                .add(name, {
-                    opacity: [0, 1],
-                    translateY: [30, 0]
-                }, '-=400')
-                .add(role, {
-                    opacity: [0, 1],
-                    translateX: [-15, 0]
-                }, '-=350')
-                .add(description, {
-                    opacity: [0, 1],
-                    translateY: [15, 0]
-                }, '-=350')
-                .add(socials, {
-                    opacity: [0, 1],
-                    translateY: [10, 0],
-                    delay: stagger(100)
-                }, '-=300')
-                .add(portrait, {
-                    opacity: [0, 1],
-                    scale: [0.85, 1]
-                }, '-=600')
-                .then(() => console.log('[anime] timeline complete'));
-        }
-
-        document.addEventListener('DOMContentLoaded', initHomepageAnimations);
-        document.addEventListener('livewire:navigated', initHomepageAnimations);
-    </script>
-@endpush

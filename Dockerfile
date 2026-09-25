@@ -56,4 +56,4 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
 EXPOSE 10000
 
-CMD ["/usr/local/bin/start.sh"]
+CMD ["/usr/local/bin/start.sh"] 

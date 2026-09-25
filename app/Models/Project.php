@@ -27,14 +27,16 @@ class Project extends Model
         'github_url',
         'live_url',
         'featured_image',
-        'project_logo'
+        'project_logo',
+        'is_featured'
     ];
 
     protected $casts = [
         'status' => \App\Enums\ProjectStatusEnum::class,
         'is_published' => 'boolean',
         'start_date' => 'date',
-        'end_date' => 'date'
+        'end_date' => 'date',
+        'is_featured' => 'boolean'
     ];
 
     public function skills(): BelongsToMany

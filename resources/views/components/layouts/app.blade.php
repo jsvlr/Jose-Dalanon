@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="light">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{ asset('js/theme.js') }}"></script>
     <link rel="shortcut icon" href="{{ Storage::url(setting('general.favicon')) }}" type="image/x-icon">
     {{-- Fontawesome CDN --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
@@ -11,10 +12,10 @@
         crossorigin="anonymous" referrerpolicy="no-referrer">
 
     <title>{{ setting('general.brandName') }} | {{ $title ?? '' }}</title>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
-    {{-- Anime.js CDN --}}
-    <script src="https://cdn.jsdelivr.net/npm/animejs/dist/bundles/anime.umd.min.js"></script>
+
 </head>
 
 <body class="dark:text-white dark:bg-black transition-colors duration-300 ease-in-out">

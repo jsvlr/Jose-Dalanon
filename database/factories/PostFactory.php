@@ -19,7 +19,7 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
-        $title = fake()->sentence(3);
+        $title = fake()->unique()->sentence(3);
         return [
             "post_category_id" => PostCategory::factory(),
             "title" =>  $title,

@@ -16,5 +16,5 @@ class SettingsCluster extends Cluster
 
     protected static ?int $navigationSort = 999;
 
-    // protected static string|UnitEnum|null $navigationGroup = \App\Enums\NavigationGroupEnum::SETTINGS;
+    protected static string|UnitEnum|null $navigationGroup = \App\Enums\NavigationGroupEnum::SETTINGS;
 }

@@ -17,10 +17,15 @@ class SkillStats extends StatsOverviewWidget
             ->limit(3)
             ->get();
 
-        return [
+        $widget = [
             Stat::make('Total Skill', number_format($stats)),
-            Stat::make((string) $topSkills[0]->name, number_format($topSkills[0]->project_skills_count))
         ];
+
+        if ($topSkills->count() > 0) {
+            $widget[] = Stat::make((string) $topSkills[0]->name, number_format($topSkills[0]->project_skills_count));
+        }
+
+        return $widget;
     }
 
     #[Override]
