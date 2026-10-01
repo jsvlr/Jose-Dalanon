@@ -6,14 +6,14 @@
             <h1 class="inline text-2xl font-bold">02</h1>
             <small class="opacity-50">Projects</small>
         </div>
-        <a class="text-sm opacity-50" href="{{ route('projects') }}">
+        <a class="text-sm opacity-50" href="{{ route('projects.index') }}">
             View all projects <i class="fa-solid fa-arrow-right-long"></i>
         </a>
     </div>
     <br>
     <div class="flex justify-between items-center gap-2">
         @foreach ($projects as $project)
-            <a class="flex flex-col" href="{{ route('projects', $project->slug) }}">
+            <a class="flex flex-col" href="{{ route('projects.show', $project->slug) }}">
                 <div class="">
                     <img class="object-cover h-80 w-auto" src="{{ Storage::url($project->featured_image) }}"
                         alt="{{ $project->slug }}-featured-image.jpeg">

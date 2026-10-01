@@ -1,4 +1,3 @@
-{{-- resources/views/components/footer.blade.php --}}
 <footer class="mt-16 border-t border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950">
     <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
 

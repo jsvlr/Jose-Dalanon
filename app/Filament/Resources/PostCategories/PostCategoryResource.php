@@ -33,7 +33,7 @@ class PostCategoryResource extends Resource
 
     protected static ?string $navigationLabel = 'Categories';
 
-    // protected static string|UnitEnum|null $navigationGroup = \App\Enums\NavigationGroupEnum::BLOG;
+    protected static string|UnitEnum|null $navigationGroup = \App\Enums\NavigationGroupEnum::BLOG;
 
     protected static ?int $navigationSort = 0;
 

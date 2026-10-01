@@ -1,13 +1,12 @@
 @props(['blogs', 'categories'])
 
-
 <div {{ $attributes }}>
     <div class="flex items-center justify-between">
         <div>
             <h1 class="inline text-2xl font-bold">01</h1>
             <small class="opacity-50">Blog</small>
         </div>
-        <a class="text-sm opacity-50" href="{{ route('blogs') }}">
+        <a class="text-sm opacity-50" href="{{ route('blogs.index') }}">
             View all posts <i class="fa-solid fa-arrow-right-long"></i>
         </a>
     </div>
@@ -23,7 +22,8 @@
 
     <div class="flex flex-col gap-3">
         @foreach ($blogs as $blog)
-            <a class="mb-5 px-2 py-3 hover:bg-gray-50 dark:hover:bg-gray-800" href="{{ route('blogs', $blog->slug) }}">
+            <a class="mb-5 px-2 py-3 hover:bg-gray-50 dark:hover:bg-gray-800"
+                href="{{ route('blogs.show', $blog->slug) }}">
                 <div class="flex flex-col items-center gap-3 sm:flex-row sm:items-start lg:flex-row lg:items-start">
                     <div>
                         <img class="h-28 lg:w-52 sm:w-full rounded-sm object-cover"

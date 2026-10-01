@@ -1,4 +1,3 @@
-{{-- resources/views/components/navbar.blade.php --}}
 <nav id="navbar" class="sticky top-0 z-50 lg:px-3 bg-white dark:bg-black shadow-2xs">
     <div class="max-w-full mx-auto flex flex-wrap items-center justify-between gap-4">
 
