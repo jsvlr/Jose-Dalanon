@@ -6,10 +6,9 @@
             {{-- Brand / About --}}
             <div class="flex flex-col items-center gap-3 text-center sm:items-start sm:text-left">
                 <div class="flex items-center gap-2">
-                    <img src="{{ Storage::url(setting('general.brandLogo')) }}" alt="{{ $name ?? 'Logo' }}"
-                        class="h-8 w-auto">
+                    <img src="{{ Storage::url($brandLogo ?? '') }}" alt="{{ $brandName ?? 'Logo' }}" class="h-8 w-auto">
                     <span class="font-bold text-gray-900 dark:text-white">
-                        {{ $name ?? '' }}
+                        {{ $brandName ?? ($name ?? '') }}
                     </span>
                 </div>
                 <p class="max-w-xs text-sm text-gray-500 dark:text-gray-400">
@@ -47,7 +46,7 @@
         {{-- Bottom bar --}}
         <div
             class="mt-8 flex flex-col items-center gap-2 border-t border-gray-200 pt-6 text-sm text-gray-500 dark:border-gray-800 dark:text-gray-400 sm:flex-row sm:justify-between">
-            <p>&copy; {{ now()->year }} {{ $name ?? '' }}. All rights reserved.</p>
+            <p>&copy; {{ now()->year }} {{ $brandName ?? ($name ?? '') }}. All rights reserved.</p>
             <p class="flex items-center gap-1">
                 Built with
                 <i class="fa-solid fa-heart text-red-500"></i>

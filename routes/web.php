@@ -1,14 +1,13 @@
 <?php
 
-use App\Livewire\About;
+use Illuminate\Support\Facades\Route;
 use App\Livewire\Blog\BlogIndex;
 use App\Livewire\Blog\BlogShow;
-use App\Livewire\Homepage;
 use App\Livewire\Project\ProjectIndex;
 use App\Livewire\Project\ProjectShow;
-use App\Livewire\Projects;
 use App\Livewire\Stack;
-use Illuminate\Support\Facades\Route;
+use App\Livewire\Homepage;
+use App\Livewire\About;
 
 Route::get('/', Homepage::class)->name('home');
 Route::get('/about', About::class)->name('about');

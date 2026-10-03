@@ -1,4 +1,4 @@
-@props(['blogs', 'categories'])
+@props(['blogs'])
 
 <div {{ $attributes }}>
     <div class="flex items-center justify-between">
@@ -12,10 +12,10 @@
     </div>
 
     <div class="my-4 flex items-center justify-center gap-2">
-        @foreach ($categories as $category)
+        @foreach ($blogs as $category)
             <div class="flex items-center justify-center gap-3">
-                <div class="p-2" style="background-color: {{ $category->color }}"></div>
-                <small>{{ $category->name }}</small>
+                <div class="p-2" style="background-color: {{ $category->postCategory->color }}"></div>
+                <small>{{ $category->postCategory->name }}</small>
             </div>
         @endforeach
     </div>

@@ -2,8 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Account;
-use Illuminate\Support\Facades\Cache;
+use App\View\Composers\SiteComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,7 +13,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(SiteComposer::class);
     }
 
     /**
@@ -23,36 +22,13 @@ class ViewComposerServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer(
-            ['components.navbar', 'components.footer', 'livewire.homepage'],
-            function ($view) {
-                $view->with('accounts', Cache::rememberForever(
-                    'social-links',
-                    fn() => Account::where('is_active', true)->get()->toArray(),
-                ));
-
-                $view->with('links', [
-                    'home' => [
-                        'label' => 'Home',
-                        'icon' => 'fa-solid fa-house'
-                    ],
-                    'blogs.index' => [
-                        'label' => 'Blog',
-                        'icon' => 'fa-brands fa-squarespace'
-                    ],
-                    'projects.index' => [
-                        'label' => 'Projects',
-                        'icon' => 'fa-solid fa-diagram-predecessor'
-                    ],
-                    'about' => [
-                        'label' => 'About',
-                        'icon' => 'fa-solid fa-info'
-                    ],
-                    'stack.index' => [
-                        'label' => 'Stack',
-                        'icon' => 'fa-solid fa-layer-group'
-                    ],
-                ]);
-            }
+            [
+                'components.layouts.app',
+                'components.navbar',
+                'components.footer',
+                'livewire.homepage'
+            ],
+            SiteComposer::class
         );
     }
 }

@@ -17,7 +17,7 @@
 
             <h1 data-animate="name"
                 class="text-5xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl lg:text-7xl">
-                {{ $name ?? '' }}
+                {{ $brandName ?? '' }}
             </h1>
 
             <div data-animate="role" class="mt-3 flex items-center justify-center gap-3 lg:justify-start">
@@ -57,7 +57,7 @@
 
     <div id="quick-stats" class="rounded-2xl w-auto mt-5">
         <div class="flex justify-around items-center gap-4">
-            @foreach ($this->quickStats() as $quickStat)
+            @foreach ($this->quickStats as $quickStat)
                 <div class="text-center p-3">
                     <h1 class=" font-bold text-2xl">{{ $quickStat->subtitle }}</h1>
                     <p class="text-gray-300">{{ $quickStat->title }}</p>
@@ -66,9 +66,9 @@
         </div>
     </div>
 
-    <x-sections.github-stats :stats="$this->githubStats()" />
-    <x-sections.featured-blogs :blogs="$this->featuredBlogs()" :categories="$this->usedBlogCategory()" class="mt-10" />
-    <x-sections.featured-projects :projects="$this->featuredProjects()" class="mt-10" />
-    <x-sections.featured-certificates :certificates="$this->featuredCertificates()" class="mt-10" />
+    <x-sections.github-stats :stats="$this->githubStats" />
+    <x-sections.featured-blogs :blogs="$this->featuredBlogs" class="mt-10" />
+    <x-sections.featured-projects :projects="$this->featuredProjects" class="mt-10" />
+    <x-sections.featured-certificates :certificates="$this->featuredCertificates" class="mt-10" />
 
 </section>

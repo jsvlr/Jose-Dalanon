@@ -3,7 +3,7 @@
 
         {{-- Left: Logo, Chat, Watching --}}
         <div class="flex flex-1 items-center gap-3 min-w-0">
-            <img src="{{ Storage::url(setting('general.brandLogo')) }}" alt="logo" class="h-10 w-auto shrink-0">
+            <img src="{{ Storage::url($brandLogo ?? '') }}" alt="logo" class="h-10 w-auto shrink-0">
 
             <button type="button"
                 class="flex items-center gap-2 cursor-pointer rounded-2xl px-3 py-2.5 text-gray-700 transition-colors hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800">
