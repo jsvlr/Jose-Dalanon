@@ -7,7 +7,8 @@ use Livewire\Component;
 
 class BlogShow extends Component
 {
-    public Post $post;
+    public ?Post $post;
+
 
     public function render()
     {
