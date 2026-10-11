@@ -76,6 +76,10 @@ class PostForm
                     ->columnSpanFull(),
 
                 RichEditor::make('content')
+                    ->fileAttachmentsDisk('public')
+                    ->fileAttachmentsDirectory('post-content-images')
+                    ->fileAttachmentsVisibility('public')
+                    ->preventFileAttachmentPathTampering()
                     ->columnSpanFull(),
 
                 DatePicker::make('published_at')

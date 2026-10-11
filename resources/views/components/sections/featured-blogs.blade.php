@@ -34,7 +34,7 @@
                     <div class="flex-1">
                         <div class="float-end">
                             <small class="opacity-50">
-                                {{ $blog->created_at->diffForHumans() }}
+                                {{ $blog->created_at->format('F j, Y') }}
                             </small>
                         </div>
                         <div class="flex flex-col items-start justify-start">

@@ -3,6 +3,7 @@
         <h1 class="text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl">
             Most recent articles
         </h1>
+
         {{-- Filter Section --}}
         <div class="filters flex items-center justify-center gap-3">
             <div class="relative w-full sm:w-64">
@@ -26,6 +27,7 @@
             </div>
         </div>
     </div>
+
     {{-- Skeleton grid: shown only while a request is in flight --}}
     <div wire:loading.grid wire:target="search, categoryId, gotoPage, previousPage, nextPage,"
         class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
