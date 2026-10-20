@@ -4,7 +4,6 @@ namespace App\Livewire;
 
 use App\Models\Certificate;
 use App\Models\Post;
-use App\Models\PostCategory;
 use App\Models\Project;
 use App\Models\QuickStat;
 use App\Services\GithubStatsService;
@@ -41,6 +40,18 @@ class Homepage extends Component
             ->limit($limit)
             ->get();
     }
+
+    #[Computed]
+    public function featuredBlogCategories(): \Illuminate\Support\Collection
+    {
+        return $this->featuredBlogs
+            ->pluck('postCategory')
+            ->filter()
+            ->unique('id')
+            ->sortBy('name')
+            ->values();
+    }
+
 
     #[Computed]
     public function featuredProjects(): Collection

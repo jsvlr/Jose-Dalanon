@@ -1,4 +1,3 @@
-{{-- resources/views/livewire/homepage.blade.php --}}
 <section id="homepage" class="px-4 sm:px-6 lg:px-8 ">
     <div id="introduction"
         class="mx-auto flex max-w-6xl flex-col-reverse items-center gap-10 lg:flex-row lg:justify-between">
@@ -67,7 +66,7 @@
     </div>
 
     <x-sections.github-stats :stats="$this->githubStats" />
-    <x-sections.featured-blogs :blogs="$this->featuredBlogs" class="mt-10" />
+    <x-sections.featured-blogs :blogs="$this->featuredBlogs" :categories="$this->featuredBlogCategories" class="mt-10" />
     <x-sections.featured-projects :projects="$this->featuredProjects" class="mt-10" />
     <x-sections.featured-certificates :certificates="$this->featuredCertificates" class="mt-10" />
 

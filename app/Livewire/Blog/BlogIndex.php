@@ -59,7 +59,6 @@ class BlogIndex extends Component
     #[Computed]
     public function posts(): ?LengthAwarePaginator
     {
-
         return Post::query()
             ->with('postCategory:id,name,color')
             ->where('status', PostStatusEnum::PUBLISHED)

@@ -1,11 +1,19 @@
 <div>
-    <div class="mb-6 flex items-center justify-between px-3 sm:px-0">
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl">
-            Most recent articles
-        </h1>
+    <div class="mt-10">
+        <div class="">
+            <p class="font-semibold opacity-50 uppercase">
+                Latest Posts
+            </p>
+            <h1 class="text-5xl font-bold">
+                Notes from what I'm building
+            </h1>
+            <p class="opacity-50 mt-4">
+                Short write-ups on Laravel, Livewire and Filament, plus lessons learned along the way.
+            </p>
+        </div>
 
         {{-- Filter Section --}}
-        <div class="filters flex items-center justify-center gap-3">
+        <div class="my-10 mx-5 filters flex items-stretch justify-end gap-3 ">
             <div class="relative w-full sm:w-64">
                 <i
                     class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-400"></i>
@@ -52,22 +60,22 @@
                 @if ($search)
                     No articles match "{{ $search }}"
                 @else
-                    No articles published yet.Check back soon.
+                    No articles published yet. Check back soon.
                 @endif
             </div>
         @else
             <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($this->posts as $post)
                     <a href="{{ route('blogs.show', $post->slug) }}" wire:key="post-{{ $post->slug }}"
-                        class="group flex flex-col overflow-hidden rounded-2xl bg-gray-50 transition-colors hover:bg-gray-100 dark:bg-gray-950 dark:hover:bg-gray-900">
+                        class="group flex flex-col overflow-hidden rounded-lg bg-gray-50 transition-colors hover:bg-gray-100 dark:bg-gray-950 dark:hover:bg-gray-900">
 
                         <div class="relative overflow-hidden">
-                            <img class="h-44 w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
+                            <img class="h-56 w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
                                 src="{{ Storage::url($post->thumbnail) }}" alt="{{ $post->title }} thumbnail">
 
                             @if ($post->postCategory)
                                 <span
-                                    class="absolute left-3 top-3 rounded-full px-3 py-1 text-xs font-semibold text-white shadow"
+                                    class="absolute left-3 top-3 rounded-lg px-3 py-1 text-xs font-semibold text-white shadow"
                                     style="background-color: {{ $post->postCategory->color }}">
                                     {{ $post->postCategory->name }}
                                 </span>
@@ -85,17 +93,25 @@
                                 </p>
                             @endif
 
-                            <div
-                                class="mt-4 flex items-center justify-between text-xs text-gray-400 dark:text-gray-500">
-                                <span>
-                                    <i class="fa-regular fa-clock"></i>
-                                    {{ $post->created_at->format('M-Y') }}
-                                </span>
-                                <span
-                                    class="font-medium text-gray-700 opacity-0 transition-opacity group-hover:opacity-100 dark:text-gray-200">
-                                    Read more <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                                </span>
+                            <div class="flex gap-2 items-center my-3">
+                                @foreach (explode(',', $post->tags) as $tag)
+                                    <small class="px-3 py-2 rounded-sm dark:bg-gray-800 bg-gray-300">
+                                        <i class="fa-solid fa-hashtag"></i> {{ $tag }}
+                                    </small>
+                                @endforeach
                             </div>
+                        </div>
+
+                        <div
+                            class="mt-4 flex items-center justify-between text-xs text-gray-400 dark:text-gray-500 p-4">
+                            <span>
+                                <i class="fa-solid fa-calendar-days"></i>
+                                {{ $post->created_at->format('j M, Y') }}
+                            </span>
+                            <span
+                                class="font-medium text-gray-700 opacity-0 transition-opacity group-hover:opacity-100 dark:text-gray-200">
+                                Read more <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </span>
                         </div>
                     </a>
                 @endforeach
