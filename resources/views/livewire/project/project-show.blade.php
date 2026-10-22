@@ -54,15 +54,15 @@
     </header>
 
     <figure
-        class="relative mt-10 aspect-[16/9] overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800 via-gray-900 to-black sm:mt-14 sm:rounded-3xl">
+        class="relative mt-10 aspect-video overflow-hidden rounded-2xl bg-linear-to-br from-gray-800 via-gray-900 to-black sm:mt-14 sm:rounded-3xl">
         @if ($project->featured_image)
             <img src="{{ Storage::url($project->featured_image) }}" alt="{{ $project->title }} project preview"
                 class="absolute inset-0 h-full w-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10" aria-hidden="true">
+            <div class="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-black/10" aria-hidden="true">
             </div>
         @else
             <div
-                class="absolute inset-0 flex items-center justify-center bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black">
+                class="absolute inset-0 flex items-center justify-center bg-[radial-gradient(ellipse_at_top_right,var(--tw-gradient-stops)) from-gray-700 via-gray-900 to-black">
                 <i class="fa-solid fa-layer-group text-6xl text-white/20 sm:text-8xl" aria-hidden="true"></i>
             </div>
         @endif

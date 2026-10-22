@@ -9,10 +9,39 @@ use App\Models\QuickStat;
 use App\Services\GithubStatsService;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 
 class Homepage extends Component
 {
+    #[Locked]
+    protected array $blogColumns = [
+        'slug',
+        'thumbnail',
+        'created_at',
+        'title',
+        'excerpt',
+        'tags',
+        'post_category_id'
+    ];
+
+    #[Locked]
+    protected array $projectColumns = [
+        'title',
+        'slug',
+        'start_date',
+        'end_date',
+        'featured_image',
+        'project_logo'
+    ];
+
+    #[Locked]
+    protected array $certificatesColumn = [
+        'image',
+        'issue_date',
+        'credential_id',
+        'credential_url'
+    ];
 
     #[Computed]
     public function quickStats(): Collection
@@ -35,7 +64,7 @@ class Homepage extends Component
         return Post::query()
             ->with('postCategory:id,name,color')
             ->where('is_featured', true)
-            ->select(['slug', 'thumbnail', 'created_at', 'title', 'excerpt', 'tags', 'post_category_id'])
+            ->select($this->blogColumns)
             ->latest()
             ->limit($limit)
             ->get();
@@ -57,7 +86,7 @@ class Homepage extends Component
     public function featuredProjects(): Collection
     {
         return Project::where('is_featured', true)
-            ->select(['title', 'slug', 'start_date', 'end_date', 'featured_image', 'project_logo'])
+            ->select($this->projectColumns)
             ->get();
     }
 
@@ -65,11 +94,13 @@ class Homepage extends Component
     public function featuredCertificates(): Collection
     {
         return Certificate::where('is_featured', true)
+            ->select($this->certificatesColumn)
             ->get();
     }
 
     public function render()
     {
-        return view('livewire.homepage');
+        return view('livewire.homepage')
+            ->title('Homepage');
     }
 }

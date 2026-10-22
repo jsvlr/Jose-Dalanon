@@ -22,7 +22,9 @@ class SiteComposer
             'brandName' => setting('general.brandName', config('app.name')),
             'brandLogo' => setting('general.brandLogo'),
             'favicon'   => setting('general.favicon'),
-            'tagline'   => setting('general.tagline')
+            'tagline'   => setting('general.tagline'),
+            'email'     => setting('general.email'),
+            'phone'     => setting('general.phone'),
         ]);
 
         return $settings + [

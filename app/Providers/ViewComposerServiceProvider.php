@@ -26,7 +26,8 @@ class ViewComposerServiceProvider extends ServiceProvider
                 'components.layouts.app',
                 'components.navbar',
                 'components.footer',
-                'livewire.homepage'
+                'livewire.homepage',
+                'livewire.about'
             ],
             SiteComposer::class
         );
