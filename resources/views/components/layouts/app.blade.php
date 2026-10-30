@@ -4,7 +4,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="shortcut icon" href="{{ Storage::url($favicon ?? '') }}" type="image/x-icon">
     {{-- Fontawesome CDN --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
@@ -13,7 +12,23 @@
     <title>{{ $brandName ?? config('app.name') }} | {{ $title ?? '' }}</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="{{ asset('js/theme.js') }}"></script>
+    <script>
+        (function() {
+            const applyTheme = () => {
+                const theme = localStorage.getItem('theme');
+                const isDark = theme === 'dark' ||
+                    (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+                document.documentElement.classList.toggle('dark', isDark);
+            };
+
+            applyTheme();
+
+            document.addEventListener('livewire:navigating', function(event) {
+                event.detail.onSwap(applyTheme);
+            });
+        })();
+    </script>
     @livewireStyles
 
 </head>
@@ -28,7 +43,6 @@
 
     <x-footer />
     @livewireScripts
-
     @stack('scripts')
 </body>
 

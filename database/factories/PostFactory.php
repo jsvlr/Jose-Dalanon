@@ -30,10 +30,7 @@ class PostFactory extends Factory
             "published_at" => fake()->dateTimeThisCentury(),
             "status" => fake()->randomElement(\App\Enums\PostStatusEnum::cases()),
             "views" => fake()->randomDigitNotNull(),
-            "tags" => array_map(
-                fn(): string => fake()->word(),
-                range(3, 5)
-            )
+            "tags" => implode(',', fake()->words(3))
         ];
     }
 }

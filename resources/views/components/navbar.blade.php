@@ -29,7 +29,17 @@
 
         {{-- Right: Dark mode toggle + CV --}}
         <div class="flex flex-1 items-center justify-end gap-3">
-            <div x-data="{ dark: localStorage.theme === 'dark' }">
+            <button x-data="{ dark: document.documentElement.classList.contains('dark') }" x-init="document.addEventListener('livewire:navigated', () => dark = document.documentElement.classList.contains('dark'))"
+                @click="
+        dark = !dark;
+        document.documentElement.classList.toggle('dark', dark);
+        localStorage.setItem('theme', dark ? 'dark' : 'light');
+    "
+                class="p-2 rounded-lg">
+                <span x-show="!dark">🌙</span>
+                <span x-show="dark">☀️</span>
+            </button>
+            {{-- <div x-data="{ dark: localStorage.theme === 'dark' }">
                 <button type="button"
                     @click="
                         dark = !dark;
@@ -41,11 +51,11 @@
                     <span x-show="!dark"><i class="fa-regular fa-moon"></i></span>
                     <span x-show="dark" x-cloak><i class="fa-regular fa-sun"></i></span>
                 </button>
-            </div>
+            </div> --}}
 
             <a class="flex items-center gap-1.5 rounded-lg bg-gray-100 px-3 py-2 text-gray-800 transition-colors hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700"
-                href="https://drive.google.com/file/d/1-jQgmg8yi3hWQbVAYwSDRliNIAFCGJc9/view?usp=sharing"
-                target="_blank" rel="noopener noreferrer" download>
+                href="{{ Storage::url(setting('general.cv')) }}" target="_blank" rel="noopener"
+                download="{{ setting('general.brandName', config('app.name')) }}-CV.pdf">
                 <i class="fa-regular fa-file"></i>
                 <small class="font-bold hidden sm:inline">Download CV</small>
             </a>

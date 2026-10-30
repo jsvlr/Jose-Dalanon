@@ -1,12 +1,16 @@
 <?php
 
+use App\Enums\PostStatusEnum;
+use App\Models\Post;
 use App\Models\Project;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use App\Services\GitHubStatsService;
+use Illuminate\Support\Str;
 
 
 describe('homepage', function () {
+
 
     it('renders homepage', function () {
         $this->get(route('home'))
@@ -85,22 +89,70 @@ describe('homepage', function () {
         Http::assertSentCount(1); // Still one count of request has been sent
     });
 
+    describe('shows featured models', function () {
+        uses()->beforeEach(function () {
+            $this->featuredTitle = fake()->sentence(2);
+            $this->featuredSlug = Str::slug($this->featuredTitle);
+
+            $this->NotFeaturedTitle = fake()->sentence(2);
+            $this->NotFeaturedSlug = Str::slug($this->NotFeaturedTitle);
+        });
+
+        it('shows featured projects', function () {
+            Project::factory()->create([
+                'title' => $this->featuredTitle,
+                'slug' => $this->featuredSlug,
+                'is_featured' => true
+            ]);
+
+            Project::factory()->create([
+                'title' => $this->NotFeaturedTitle,
+                'slug' => $this->NotFeaturedSlug,
+                'is_featured' => false
+            ]);
+
+            $this->get(route('home'))
+                ->assertOk()
+                ->assertSee($this->featuredTitle)
+                ->assertDontSee($this->NotFeaturedTitle);
+        });
+    });
+
     it('shows featured projects', function () {
-        Project::factory()->create([
-            'title' => 'How to create a test file on pest',
-            'slug' => 'how-to-create-a-test-file-on-pest',
+        $featuredProject = Project::factory()->create([
+            'title' => 'Featured Project Title',
             'is_featured' => true
         ]);
 
-        Project::factory()->create([
-            'title' => 'Testing not featured project',
-            'slug' => 'testing-not-featured-project',
+        $hiddenProject = Project::factory()->create([
+            'title' => 'Regular Project Title',
             'is_featured' => false
         ]);
 
         $this->get(route('home'))
             ->assertOk()
-            ->assertSee('How to create a test file on pest')
-            ->assertDontSee('Testing not featured project');
+            ->assertSee($featuredProject->title)
+            ->assertDontSee($hiddenProject->title);
     });
+
+    it('shows featured posts', function () {
+        $featuredPost = Post::factory()->create([
+            'title' => 'Featured Post Title',
+            'is_featured' => true,
+            'status' => PostStatusEnum::PUBLISHED
+        ]);
+
+        $hiddenPost = Post::factory()->create([
+            'title' => 'Regular Post Title',
+            'is_featured' => false,
+            'status' => PostStatusEnum::PUBLISHED
+        ]);
+
+        $this->get(route('home'))
+            ->assertOk()
+            ->assertSee($featuredPost->title)
+            ->assertDontSee($hiddenPost->title);
+    });
+
+    it('shows certificates', function () {});
 });

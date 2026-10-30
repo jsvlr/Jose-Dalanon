@@ -87,7 +87,18 @@ class General extends Settings
                                     ->disk('public')
                                     ->image()
                                     ->directory('brand')
-                                    ->maxSize(256)
+                                    ->maxSize(256),
+
+                                FileUpload::make('general.cv')
+                                    ->label('CV/Resume')
+                                    ->disk('public')
+                                    ->directory('cv')
+                                    ->acceptedFileTypes(['application/pdf'])
+                                    ->required()
+                                    ->helperText('Upload PDF files only, max 5mb')
+                                    ->maxSize(5120) // 5mb
+                                    ->columnSpan(2)
+
                             ]),
 
                         Tab::make('Contact')

@@ -122,12 +122,12 @@
                             {{-- URL and Code Source --}}
                             <div class="absolute left-0 top-10">
                                 <div class="flex flex-col gap-1">
-                                    <a class="text-xs p-3 bg-gray-800 rounded-r-full" href="{{ $project->github_url }}"
-                                        target="_blank">
+                                    <a class="text-xs p-3 bg-gray-200 dark:bg-gray-800 rounded-r-full"
+                                        href="{{ $project->github_url }}" target="_blank">
                                         <i class="fa-solid fa-code"></i>
                                     </a>
-                                    <a class="text-xs p-3 bg-gray-800 rounded-r-full" href="{{ $project->live_url }}"
-                                        target="_blank">
+                                    <a class="text-xs p-3 bg-gray-200 dark:bg-gray-800 rounded-r-full"
+                                        href="{{ $project->live_url }}" target="_blank">
                                         <i class="fa-regular fa-share-from-square"></i>
                                     </a>
                                 </div>
