@@ -18,6 +18,7 @@ class Company extends Model
         'logo',
         'type',
         'is_verified',
+        'description'
     ];
 
     protected $casts = [

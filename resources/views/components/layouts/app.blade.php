@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
 
 <head>
     <meta charset="utf-8">
@@ -12,23 +12,6 @@
     <title>{{ $brandName ?? config('app.name') }} | {{ $title ?? '' }}</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script>
-        (function() {
-            const applyTheme = () => {
-                const theme = localStorage.getItem('theme');
-                const isDark = theme === 'dark' ||
-                    (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches);
-
-                document.documentElement.classList.toggle('dark', isDark);
-            };
-
-            applyTheme();
-
-            document.addEventListener('livewire:navigating', function(event) {
-                event.detail.onSwap(applyTheme);
-            });
-        })();
-    </script>
     @livewireStyles
 
 </head>

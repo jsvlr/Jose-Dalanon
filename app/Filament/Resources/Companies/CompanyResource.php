@@ -107,7 +107,7 @@ class CompanyResource extends Resource
             ->columns([
                 ImageColumn::make('logo')
                     ->disk('public')
-                    ->circular(),
+                    ->alignCenter(),
 
                 TextColumn::make('name')
                     ->sortable()
@@ -136,8 +136,12 @@ class CompanyResource extends Resource
                     ->boolean()
                     ->alignCenter(),
 
-                TextColumn::make('certificates.count')
+                TextColumn::make('certificates_count')
+                    ->label('Certificate')
+                    ->counts('certificates')
+                    ->badge()
                     ->default(0)
+                    ->sortable()
                     ->alignCenter(),
 
                 TextColumn::make('created_at')

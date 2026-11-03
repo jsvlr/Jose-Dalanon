@@ -13,6 +13,7 @@ use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\Facades\Storage;
 use Override;
 
 
@@ -97,6 +98,9 @@ class General extends Settings
                                     ->required()
                                     ->helperText('Upload PDF files only, max 5mb')
                                     ->maxSize(5120) // 5mb
+                                    ->openable()
+                                    ->deletable()
+                                    ->deleteUploadedFileUsing(fn(string $file) => Storage::disk('public')->delete($file)) // delete the old cv if new is added
                                     ->columnSpan(2)
 
                             ]),
