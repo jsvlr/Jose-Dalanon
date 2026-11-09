@@ -11,7 +11,6 @@ use Outerweb\FilamentSettings\Pages\Settings;
 use App\Filament\Clusters\Settings\SettingsCluster;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\Storage;
 use Override;
@@ -23,7 +22,6 @@ class General extends Settings
     protected static ?string $navigationLabel = 'General';
 
     protected static ?string $cluster = SettingsCluster::class;
-
 
     #[Override]
     public function getTitle(): string|Htmlable

@@ -9,11 +9,12 @@ class GitHubStatsService
 {
     public function stats(): array
     {
+
         return Cache::remember('github-stats', now()->addHours(6), function () {
-            $response = Http::withToken(config('services.github.token'))
+            $response = Http::withToken(setting('github.token', ''))
                 ->post('https://api.github.com/graphql', [
                     'query' => $this->query(),
-                    'variables' => ['login' => config('services.github.username')],
+                    'variables' => ['login' => setting('github.username', '')],
                 ]);
 
             if ($response->failed() || !$response->json('data.user')) {
