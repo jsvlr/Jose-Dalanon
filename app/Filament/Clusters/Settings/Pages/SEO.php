@@ -2,6 +2,7 @@
 
 namespace App\Filament\Clusters\Settings\Pages;
 
+use App\Enums\NavigationGroupEnum;
 use App\Filament\Clusters\Settings\SettingsCluster;
 
 use Filament\Forms\Components\TagsInput;
@@ -16,14 +17,15 @@ use Outerweb\FilamentSettings\Pages\Settings;
 use Override;
 use BackedEnum;
 use Filament\Forms\Components\Toggle;
+use UnitEnum;
 
 class SEO extends Settings
 {
-    protected static ?string $cluster = SettingsCluster::class;
-
     protected static ?string $navigationLabel = 'SEO';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::MagnifyingGlass;
+
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroupEnum::SETTINGS;
 
     protected static ?string $slug = 'seo';
 

@@ -2,26 +2,29 @@
 
 namespace App\Filament\Clusters\Settings\Pages;
 
+use App\Enums\NavigationGroupEnum;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use Filament\Support\Colors\Color;
 use Outerweb\FilamentSettings\Pages\Settings;
-use App\Filament\Clusters\Settings\SettingsCluster;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\Storage;
 use Override;
-
+use UnitEnum;
+use BackedEnum;
+use Filament\Forms\Components\Checkbox;
 
 class General extends Settings
 {
 
     protected static ?string $navigationLabel = 'General';
-
-    protected static ?string $cluster = SettingsCluster::class;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCog6Tooth;
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroupEnum::SETTINGS;
 
     #[Override]
     public function getTitle(): string|Htmlable
@@ -127,6 +130,15 @@ class General extends Settings
                                     ->label('Business Address')
                                     ->helperText('Physical or mailing address')
                                     ->columnSpanFull()
+                            ]),
+
+                        Tab::make('Access Panel')
+                            ->columns(3)
+                            ->components([
+                                Checkbox::make('general.can_register_new_account')
+                                    ->label('Allowed new account registration')
+                                    ->default(false)
+                                    ->helperText('If this box is tick new user can modify your information.')
                             ])
                     ])
             ]);

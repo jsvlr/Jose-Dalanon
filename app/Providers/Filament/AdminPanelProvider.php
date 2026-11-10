@@ -32,8 +32,8 @@ class AdminPanelProvider extends PanelProvider
 
     public function panel(Panel $panel): Panel
     {
-        $panel = $this->applyGeneralSettingsConfig($panel);
-
+        $this->applyGeneralSettingsConfig($panel);
+        $this->canRegister($panel);
         $panel
             ->default()
             ->id('admin')
@@ -79,7 +79,14 @@ class AdminPanelProvider extends PanelProvider
         return $panel;
     }
 
-    protected function applyGeneralSettingsConfig(Panel $panel): Panel
+    protected function canRegister(Panel $panel): void
+    {
+        if (Setting::get('general.can_register_new_account', false)) {
+            $panel->registration();
+        }
+    }
+
+    protected function applyGeneralSettingsConfig(Panel $panel): void
     {
         try {
             $general = [
@@ -106,7 +113,5 @@ class AdminPanelProvider extends PanelProvider
         } catch (Exception $e) {
             Log::error($e);
         }
-
-        return $panel;
     }
 }

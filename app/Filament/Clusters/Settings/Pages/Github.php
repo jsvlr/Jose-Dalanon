@@ -2,7 +2,7 @@
 
 namespace App\Filament\Clusters\Settings\Pages;
 
-use App\Filament\Clusters\Settings\SettingsCluster;
+use App\Enums\NavigationGroupEnum;
 use BackedEnum;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
@@ -10,6 +10,7 @@ use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Support\Htmlable;
 use Outerweb\FilamentSettings\Pages\Settings;
 use Override;
+use UnitEnum;
 
 class Github extends Settings
 {
@@ -17,7 +18,7 @@ class Github extends Settings
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Bolt;
 
-    protected static ?string $cluster = SettingsCluster::class;
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroupEnum::SETTINGS;
 
     #[Override]
     public function getTitle(): string|Htmlable
