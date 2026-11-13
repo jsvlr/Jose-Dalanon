@@ -2,6 +2,7 @@
 
 namespace App\Filament\Clusters\Settings\Pages;
 
+use App\Concerns\DeletesReplacedFiles;
 use App\Enums\NavigationGroupEnum;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\FileUpload;
@@ -21,6 +22,7 @@ use Filament\Forms\Components\Checkbox;
 
 class General extends Settings
 {
+    use DeletesReplacedFiles;
 
     protected static ?string $navigationLabel = 'General';
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCog6Tooth;
@@ -30,6 +32,15 @@ class General extends Settings
     public function getTitle(): string|Htmlable
     {
         return 'Manage General';
+    }
+
+    protected function getFileFields(): array
+    {
+        return [
+            'general.brandLogo',
+            'general.brandLogoDarkMode',
+            'general.favicon',
+        ];
     }
 
     #[Override]

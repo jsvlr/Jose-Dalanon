@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Concerns\DeletesFilesModelOnChange;
 use Filament\Forms\Components\RichEditor\Models\Concerns\InteractsWithRichContent;
 use Filament\Forms\Components\RichEditor\Models\Contracts\HasRichContent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +14,8 @@ class Post extends Model implements HasRichContent
 {
     /** @use HasFactory<\Database\Factories\PostFactory> */
     use HasFactory,
-        InteractsWithRichContent;
+        InteractsWithRichContent,
+        DeletesFilesModelOnChange;
 
     protected $fillable = [
         "post_category_id",
@@ -34,9 +36,9 @@ class Post extends Model implements HasRichContent
     {
         return [
             'published_at' => 'date',
-            'status'       => \App\Enums\PostStatusEnum::class,
-            'tags'         => 'array',
-            'is_featured'  => 'bool'
+            'status' => \App\Enums\PostStatusEnum::class,
+            'tags' => 'array',
+            'is_featured' => 'bool'
         ];
     }
 
@@ -56,5 +58,17 @@ class Post extends Model implements HasRichContent
     public function postCategory(): BelongsTo
     {
         return $this->belongsTo(PostCategory::class);
+    }
+
+    protected function getFileDisk(): string
+    {
+        return 'public';
+    }
+
+    protected function getFileFields(): array
+    {
+        return [
+            'thumbnail'
+        ];
     }
 }
