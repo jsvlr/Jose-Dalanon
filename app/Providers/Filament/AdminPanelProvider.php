@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Auth\Register;
 use Awcodes\Gravatar\GravatarPlugin;
 use Awcodes\Gravatar\GravatarProvider;
 use Exception;
@@ -28,8 +29,6 @@ use Outerweb\Settings\Facades\Setting;
 
 class AdminPanelProvider extends PanelProvider
 {
-
-
     public function panel(Panel $panel): Panel
     {
         $this->applyGeneralSettingsConfig($panel);
@@ -73,9 +72,6 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ]);
-
-
-
         return $panel;
     }
 
@@ -83,7 +79,8 @@ class AdminPanelProvider extends PanelProvider
     {
         try {
             if (Setting::get('general.can_register_new_account', true)) {
-                $panel->registration();
+                $panel->registration(Register::class)
+                    ->emailVerification();
             }
         } catch (Exception $e) {
             Log::error($e);
