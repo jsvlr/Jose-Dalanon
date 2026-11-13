@@ -81,8 +81,12 @@ class AdminPanelProvider extends PanelProvider
 
     protected function canRegister(Panel $panel): void
     {
-        if (Setting::get('general.can_register_new_account', false)) {
-            $panel->registration();
+        try {
+            if (Setting::get('general.can_register_new_account', false)) {
+                $panel->registration();
+            }
+        } catch (Exception $e) {
+            Log::error($e);
         }
     }
 
