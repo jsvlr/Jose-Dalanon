@@ -9,12 +9,22 @@ class GitHubStatsService
 {
     public function stats(): array
     {
+        $gUsername = setting('github.username', null);
+        $gToken = setting('github.token', null);
 
-        return Cache::remember('github-stats', now()->addHours(6), function () {
-            $response = Http::withToken(setting('github.token', ''))
+        $fingerprint = hash('sha256', serialize([$gUsername, $gToken]));
+        $previousFingerprint = Cache::get('github-stats-config-fingerprint');
+
+        if ($previousFingerprint !== $fingerprint) {
+            Cache::forget('github-stats');
+            Cache::forever('github-stats-config-fingerprint', $fingerprint);
+        }
+
+        return Cache::remember('github-stats', now()->addHours(6), function () use ($gUsername, $gToken) {
+            $response = Http::withToken($gToken)
                 ->post('https://api.github.com/graphql', [
                     'query' => $this->query(),
-                    'variables' => ['login' => setting('github.username', '')],
+                    'variables' => ['login' => $gUsername],
                 ]);
 
             if ($response->failed() || !$response->json('data.user')) {

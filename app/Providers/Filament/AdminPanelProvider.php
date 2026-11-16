@@ -26,6 +26,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Outerweb\FilamentSettings\SettingsPlugin;
 use Outerweb\Settings\Facades\Setting;
+use Filament\Auth\MultiFactor\App\AppAuthentication;
+use Filament\Auth\MultiFactor\Email\EmailAuthentication;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -39,6 +41,17 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->sidebarCollapsibleOnDesktop()
             ->login()
+            ->multiFactorAuthentication([
+                AppAuthentication::make()
+                    ->brandName('Multi-Factor Authentication')
+                    ->recoverable()
+                    ->recoveryCodeCount(10)
+                    ->regenerableRecoveryCodes(false)
+                    ->codeWindow(4),
+
+                EmailAuthentication::make()
+                    ->codeExpiryMinutes(2)
+            ], isRequired: true)
             ->defaultAvatarProvider(GravatarProvider::class)
             ->profile(isSimple: false)
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
@@ -80,7 +93,8 @@ class AdminPanelProvider extends PanelProvider
         try {
             if (Setting::get('general.can_register_new_account', true)) {
                 $panel->registration(Register::class)
-                    ->emailVerification();
+                    ->emailVerification()
+                    ->emailChangeVerification();
             }
         } catch (Exception $e) {
             Log::error($e);
@@ -113,6 +127,18 @@ class AdminPanelProvider extends PanelProvider
                     ->favicon(Storage::url($path)));
         } catch (Exception $e) {
             Log::error($e);
+        }
+    }
+
+    protected function applySecuritySettingsConfig(Panel $panel): void
+    {
+        try {
+            if (Setting::get('security.password_reset', true)) {
+                $panel->passwordReset();
+            }
+
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
         }
     }
 }
