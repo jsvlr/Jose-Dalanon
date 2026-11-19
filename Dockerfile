@@ -52,7 +52,18 @@ COPY docker/start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
 # Laravel permissions (storage/cache need to be writable)
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+# RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+
+RUN mkdir -p storage/app/private/livewire-tmp \
+             storage/app/public \
+             storage/framework/cache \
+             storage/framework/sessions \
+             storage/framework/views \
+             storage/logs \
+             bootstrap/cache \
+   && chown -R www-data:www-data storage bootstrap/cache \
+   && chown -R 775 storage bootstrap/cache
+
 
 EXPOSE 10000
 
