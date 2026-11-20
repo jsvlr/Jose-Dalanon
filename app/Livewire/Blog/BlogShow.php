@@ -3,7 +3,6 @@
 namespace App\Livewire\Blog;
 
 use App\Models\Post;
-use Filament\Forms\Components\RichEditor\RichContentRenderer;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
@@ -21,7 +20,7 @@ class BlogShow extends Component
 
     public function recordView(): void
     {
-        $key = "post_view:{$this->post->slug}:" . request()->ip();
+        $key = "post_view:{$this->post->slug}:".request()->ip();
 
         // once per IP every 6 hours; remove the Cache:add check to count every refresh
         if (Cache::add($key, now()->addHours(6))) {
@@ -32,9 +31,7 @@ class BlogShow extends Component
     #[Computed]
     public function content(): string
     {
-        return RichContentRenderer::make($this->post->content)
-            ->fileAttachmentsDisk('public')
-            ->toHtml();
+        return $this->post->renderRichContent('content');
     }
 
     public function render()
