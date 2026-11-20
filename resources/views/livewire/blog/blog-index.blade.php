@@ -74,8 +74,7 @@
                                 src="{{ Storage::url($post->thumbnail) }}" alt="{{ $post->title }} thumbnail">
 
                             @if ($post->postCategory)
-                                <span
-                                    class="absolute left-3 top-3 rounded-lg px-3 py-1 text-xs font-semibold text-white shadow"
+                                <span class="absolute left-3 top-3 rounded-lg px-3 py-1 text-xs font-semibold text-white shadow"
                                     style="background-color: {{ $post->postCategory->color }}">
                                     {{ $post->postCategory->name }}
                                 </span>
@@ -93,7 +92,7 @@
                                 </p>
                             @endif
 
-                            <div class="flex gap-2 items-center my-3">
+                            <div class="flex gap-2 items-center my-3 flex-wrap">
                                 @foreach (explode(',', $post->tags) as $tag)
                                     <small class="px-3 py-2 rounded-sm dark:bg-gray-800 bg-gray-300">
                                         <i class="fa-solid fa-hashtag"></i> {{ $tag }}
@@ -102,8 +101,7 @@
                             </div>
                         </div>
 
-                        <div
-                            class="mt-4 flex items-center justify-between text-xs text-gray-400 dark:text-gray-500 p-4">
+                        <div class="mt-4 flex items-center justify-between text-xs text-gray-400 dark:text-gray-500 p-4">
                             <span>
                                 <i class="fa-solid fa-calendar-days"></i>
                                 {{ $post->created_at->format('j M, Y') }}
